@@ -11,16 +11,18 @@ class SimpleGlobalButton extends StatelessWidget {
     required this.onTap,
     required this.title,
     required this.horizontalPadding,
+    required this.verticalPadding,
   });
 
   final VoidCallback onTap;
   final String title;
   final double horizontalPadding;
+  final double verticalPadding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding,vertical:verticalPadding ),
       width: width,
       child: TextButton(
         style: TextButton.styleFrom(

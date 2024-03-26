@@ -10,4 +10,10 @@ class AppConstants {
   static String baseUrl = "crudapi.co.uk";
   static String token = "0c4BHcTzI1QLQUfpDiw7CjMtk2-sJLbOOv0ZOHbOkOoCBweFrQ";
 
+
+  static String clientID = "699471060311-boktfei0alnfbjc140gako8vvncn4opj.apps.googleusercontent.com";
+
+  static String categories = "categories";
+  static String products = "products";
+
 }

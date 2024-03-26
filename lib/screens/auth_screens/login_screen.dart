@@ -1,14 +1,18 @@
-import 'package:firebase/screens/register_screen.dart';
+import 'package:firebase/screens/auth_screens/register_screen.dart';
 import 'package:firebase/screens/widget/password_text_input.dart';
 import 'package:firebase/screens/widget/simple_global_button.dart';
 import 'package:firebase/screens/widget/universal_text_input.dart';
 import 'package:firebase/utils/project_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
-import '../utils/colors/app_colors.dart';
-import '../utils/images/app_images.dart';
-import '../utils/styles/app_text_style.dart';
+import '../../view_models/login_view_model.dart';
+import '../../utils/colors/app_colors.dart';
+import '../../utils/images/app_images.dart';
+import '../../utils/styles/app_text_style.dart';
+import '../routes.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -36,7 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: AppColors.white,
 
-      body: Padding(
+      body: context.watch<auth_view_model>().loading
+          ? const Center(child: CircularProgressIndicator()):
+
+      Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Form(
           autovalidateMode: AutovalidateMode.always,
@@ -54,18 +61,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "Welcome Back!",
                         style: AppTextStyle.rubikSemiBold.copyWith(
-                          color: AppColors.c_29BB89,
+                          color: AppColors.c_2C2C73,
                           fontSize: 24,
                         ),
                       ),
                       SizedBox(height: 24.h()),
                       UniversalTextField(
 
-                        errorText: "Ismni to'g'ri  kiriting!",
+                        errorText: "Mailni to'g'ri  kiriting!",
                         regExp: RegExp("[a-zA-Z]"),
                         controller: usernameController,
                         iconPath: AppImages.sms,
-                        hintText: "Username",
+                        hintText: "Mail ",
                         type: TextInputType.text,
                       ),
                       SizedBox(height: 16.h()),
@@ -81,29 +88,47 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 24.h()),
                       SimpleGlobalButton(
                         onTap: () {
-                          bool validated = formKey.currentState!.validate();
-                          print(validated);
-                          if (validated) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("SUCCESS!")));
-                          }
+                          context.read<auth_view_model>().loginUser(
+                            context,
+                            email: usernameController.text,
+                            password: passwordController.text,
+                          );
                         },
                         title: "LOGIN",
-                        horizontalPadding: 0,
+                        horizontalPadding: 0, verticalPadding: 0,
                       ),
+                      SizedBox(height: 25.h(),),
+                      Row(
+
+                        children: [
+                          Spacer(),
+                          // Expanded(child: Image.asset(AppImages.aple2,width: 10,height: 10,)),
+                          IconButton(
+                            onPressed: (){},
+                            icon: SvgPicture.asset(AppImages.google),
+                          ),Spacer(),
+                          IconButton(
+                            onPressed: (){},
+                            icon: SvgPicture.asset(AppImages.fasebook),
+                          ),
+                          Spacer(),
+                          IconButton(
+                            onPressed: (){},
+                            icon: SvgPicture.asset(AppImages.iphone),
+                          ),
+                          Spacer(),
+                          // Image.asset(AppImages.google,width: 10,),
+                          // Image.asset(AppImages.fasbooke,width: 10,),
+                        ],),
                     ],
                   ),
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.pushReplacementNamed(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return RegisterScreen();
-                      },
-                    ),
+                    RouteNames.registerRoute,
                   );
                 },
                 child: Row(

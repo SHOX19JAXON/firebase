@@ -1,12 +1,14 @@
+import 'package:firebase/view_models/login_view_model.dart';
 import 'package:firebase/utils/colors/app_colors.dart';
 import 'package:firebase/utils/project_extensions.dart';
 import 'package:firebase/utils/styles/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class UniversalTextField extends StatelessWidget {
-  const UniversalTextField({
+   const UniversalTextField({
     super.key,
     required this.controller,
     required this.iconPath,
@@ -25,6 +27,7 @@ class UniversalTextField extends StatelessWidget {
   final RegExp regExp;
   final String? labelText;
 
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -32,7 +35,7 @@ class UniversalTextField extends StatelessWidget {
       keyboardType: type,
       style: AppTextStyle.rubikSemiBold.copyWith(
         fontSize: 15,
-        color: AppColors.c_29BB89,
+        color:Colors.black,
       ),
       validator: (String? value) {
         if (value == null ||
@@ -44,8 +47,11 @@ class UniversalTextField extends StatelessWidget {
           return null;
         }
       },
+
       autovalidateMode: AutovalidateMode.onUserInteraction,
+
       decoration: InputDecoration(
+
         labelText: labelText,
         contentPadding: EdgeInsets.symmetric(
           vertical: 16.h(),

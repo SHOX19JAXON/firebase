@@ -1,4 +1,5 @@
 import 'package:firebase/data/models/natification.dart';
+import 'package:firebase/screens/tabs/push_notefication/push_notification.dart';
 import 'package:firebase/services/local_notification_service.dart';
 import 'package:firebase/utils/colors/app_colors.dart';
 import 'package:firebase/view_models/natification.dart';
@@ -40,43 +41,48 @@ class _MessageScreenState extends State<Notification1> {
       ),
       body: Column(
         children: [
+          ...List.generate(
+            context.watch<NotificationViewModel>().natification.length,
+            (index) {
+              NatificationModel natificationModel =
+                  context.watch<NotificationViewModel>().natification[index];
 
-            ...List.generate(
-              context.watch<NotificationViewModel>().natification.length,
-              (index) {
-                NatificationModel natificationModel =
-                    context.watch<NotificationViewModel>().natification[index];
-
-                print(natificationModel);
-                return ListTile(
-                  title: Container(
-                      width: 50,
-                      height: 20,
-                      color: Colors.white,
-                      child: Text(
-                        natificationModel.name,
-                        style: TextStyle(color: AppColors.black),
-                      )),
-                  subtitle: Text(natificationModel.id.toString()),
-                  trailing: Container(
+              print(natificationModel);
+              return ListTile(
+                title: Container(
                     width: 50,
                     height: 20,
-                    color: Colors.red,
-                    child: IconButton(
-                      onPressed: () {
-                        LocalNotificationService.localNotificationService
-                            .cancelNotification(natificationModel.id);
-                        context.read<NotificationViewModel>().natification;
-                      },
-                      icon: const Icon(
-                        Icons.delete,
-                        color: Colors.black,
-                      ),
-                    ),
+                    color: Colors.white,
+                    child: Text(
+                      natificationModel.name,
+                      style: TextStyle(color: AppColors.black),
+                    )),
+                subtitle: Text(natificationModel.id.toString()),
+                trailing: IconButton(
+                  onPressed: () {
+                    LocalNotificationService.localNotificationService
+                        .cancelNotification(natificationModel.id);
+                    context.read<NotificationViewModel>().natification;
+                    context
+                        .read<NotificationViewModel>()
+                        .removeMessage(natificationModel: natificationModel);
+                  },
+                  icon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.delete),
+                    color: Colors.black,
                   ),
-                );
+                ),
+              );
+            },
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PushNotification();
+                }));
               },
-            )
+              child: Text("Push Notification"))
         ],
       ),
     );

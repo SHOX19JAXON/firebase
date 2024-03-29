@@ -1,9 +1,11 @@
+import 'package:firebase/screens/permissions/permissions_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
 import '../screens/routes.dart';
+import '../utils/app_permissions.dart';
 import '../utils/constants/app_constant.dart';
 import '../utils/utilities.dart';
 
@@ -66,7 +68,9 @@ class auth_view_model extends ChangeNotifier {
           password: password,
         );
         if (!context.mounted) return;
+
         Navigator.pushReplacementNamed(context, RouteNames.tabRoute);
+        AppPermissions.getSomePermissions();
       } on FirebaseAuthException catch (err) {
         if (!context.mounted) return;
         showErrorForLogin(err.code, context);

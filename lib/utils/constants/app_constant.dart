@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class AppConstants {
 
   static  RegExp emailRegExp = RegExp(r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
@@ -15,5 +17,6 @@ class AppConstants {
 
   static String categories = "categories";
   static String products = "products";
-
+  static String key = "AAAAOKNFCyo:APA91bEIciPPkY3Jyx2rGA27tgZrcqQpeUL-_EvpreX-m9j5cCOYrykcF7IQBkBq8EcLS_46YmyP5plH4ZYwb-7_A0j4uFXXuB09q1KwJ2MiLYrosIzg861JuiI44_DjR0nkC-2SdMlN";
+  static bool malumot = true;
 }

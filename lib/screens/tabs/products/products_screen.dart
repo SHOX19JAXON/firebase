@@ -1,3 +1,4 @@
+import 'package:firebase/data/lokal/local.dart';
 import 'package:firebase/data/models/product_model.dart';
 import 'package:firebase/screens/tabs/add_product_screen/add_product_screen.dart';
 import 'package:firebase/screens/tabs/products/vidget_items/product_widget.dart';
@@ -5,13 +6,21 @@ import 'package:firebase/services/local_notification_service.dart';
 import 'package:firebase/utils/project_extensions.dart';
 import 'package:firebase/view_models/natification.dart';
 import 'package:firebase/view_models/products_view_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../../data/models/natification.dart';
 import '../../../utils/colors/app_colors.dart';
+import '../../../utils/constants/app_constant.dart';
+import '../../permissions/permissions_screen.dart';
 import '../product_info_screen/product_info_screen.dart';
+
+Future<void> onBackgroundFCM(RemoteMessage message) async {
+  debugPrint(
+      "BACKGROUND MODEDA PUSH NOTIFICATION KELDI:${message.notification!.title}");
+}
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -23,8 +32,33 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   int son = 1;
 
+  _init() async {
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+    debugPrint("FCM TOKEN ${fcmToken}");
+    FirebaseMessaging.onMessage.listen((remoteMessage) {
+      debugPrint(
+          "Push notification keldiku☺️ => ${remoteMessage.notification!.title}");
+      if (remoteMessage.notification != null) {
+        print(son);
+        son++;
+        LocalNotificationService().showNotification(
+            title: remoteMessage.notification!.title!,
+            body: remoteMessage.notification!.body!,
+            id: son);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -37,18 +71,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return const AddProductScreen();
               }));
-              // context.read<ProductsViewModel>().insertProducts(
-              //       ProductModel(
-              //         price: 12.5,
-              //         imageUrl:
-              //             "https://i.ebayimg.com/images/g/IUMAAOSwZGBkTR-K/s-l400.png",
-              //         productName: "Nokia 12 80",
-              //         docId: "",
-              //         productDescription: "productDescription",
-              //         categoryId: "kcggCJzOEz7gH1LQy44x",
-              //       ),
-              //       context,
-              //     );
             },
             icon: const Icon(Icons.add),
           ),
@@ -66,6 +88,30 @@ class _ProductsScreenState extends State<ProductsScreen> {
             List<ProductModel> list = snapshot.data as List<ProductModel>;
             return ListView(
               children: [
+                SizedBox(height: 20,),
+                Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 25.h()),
+                  child: Container(
+                    decoration:  BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.w()),
+                      color: AppColors.c_2C2C73,
+                    ),
+                    width: double.infinity,
+
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const PermissionsScreen();
+                        }));
+                      },
+                      child: const Text(
+                        "Permissions",
+                        style: TextStyle(color: AppColors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.w()),
                   child: GridView.count(
@@ -89,10 +135,15 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     title: productModel.productName,
                                     body: productModel.productDescription,
                                     id: son);
-                            NatificationModel nati = NatificationModel(
-                                name: productModel.productName, id: son);
-                            son++;
-                            NotificationViewModel().natification.add(nati);
+
+                            context.read<NotificationViewModel>().addMessage(
+                                  natificationModel: NatificationModel(
+                                      name:
+                                          "categoriy   Yngilandi Malumot qo'shildi",
+                                      id: idContLocal),
+                                );
+                            idContLocal++;
+
                             context
                                 .read<ProductsViewModel>()
                                 .getProductsByCategory(productModel.categoryId);
@@ -109,8 +160,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             productDescription: productModel.productDescription,
                             price: productModel.price,
                             imageUrl: productModel.imageUrl,
-                            // "https://th.bing.com/th/id/R.7b72d0e17b496199e48ee384d8bc9f00?rik=Z33tT%2bXleUnlTQ&riu=http%3a%2f%2fwww.pngmart.com%2ffiles%2f13%2fiPhone-12-Transparent-Images-PNG.png&ehk=aPPAg%2fQyxClzsrxOfHW8sIdYC%2fSngQ9JInZsdvuxg%2bY%3d&risl=&pid=ImgRaw&r=0",
-                            // https://static-assets.business.amazon.com/assets/in/24th-jan/705_Website_Blog_Appliances_1450x664.jpg.transform/1450x664/image.jpg
+                            // AppConstants.malumot==true?  productModel.storagePath :
                             categoryId: productModel.productDescription,
                           ),
                         );

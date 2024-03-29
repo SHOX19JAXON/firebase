@@ -1,6 +1,8 @@
 import 'package:firebase/data/models/category_model.dart';
+import 'package:firebase/screens/tabs/news_screen/news_screen.dart';
 import 'package:firebase/screens/tabs/products/products_screen.dart';
 import 'package:firebase/screens/tabs/profile/profile_screen.dart';
+import 'package:firebase/screens/tabs/push_notefication/push_screen.dart';
 import 'package:firebase/utils/colors/app_colors.dart';
 import 'package:firebase/utils/images/app_images.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +27,10 @@ class _TabScreenState extends State<TabScreen> {
   List<Widget> screens = [
     ProductsScreen(),
     ProfileScreen(),
+    PushNotificationScreen(),
     CategoriesScreen(),
-    Notification1()
+    Notification1(),
+
   ];
 
   @override
@@ -48,11 +52,21 @@ class _TabScreenState extends State<TabScreen> {
           const BottomNavigationBarItem(
             icon: Icon(Icons.person,color: Colors.black,),
             label: "Profile",
+
             activeIcon: Icon(
               Icons.person,
               color: Colors.black,
             ),
           ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dataset_outlined,color: Colors.black,),
+            label: "News",
+            // backgroundColor : AppColors.white,
+
+            activeIcon: Icon(Icons.dataset_outlined,color: Colors.black,),
+          ),
+
           BottomNavigationBarItem(
             icon: SvgPicture.asset(AppImages.savat,color: Colors.black,),
             label: "Categories",

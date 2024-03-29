@@ -49,13 +49,15 @@ dependencies:
   searchable_listview: ^2.10.2
   math_expressions: ^2.0.0
   flutter_screenutil: ^5.9.0
-
+  image_picker: ^1.0.7
   google_sign_in: ^6.2.1
   cloud_firestore: ^4.15.9
   flutter_local_notifications: ^17.0.0
   flutter_timezone: ^1.0.8
-
-
+  permission_handler: ^11.3.1
+  firebase_messaging: ^14.7.20
+  firebase_storage: ^11.6.11
+  location: ^5.0.3
 
 
 

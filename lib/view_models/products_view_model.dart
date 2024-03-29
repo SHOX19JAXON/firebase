@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/data/models/product_model.dart';
-import 'package:firebase/services/local_notification_service.dart';
-import 'package:firebase/utils/constants/app_constant.dart';
-import 'package:firebase/utils/utilities.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+
+import '../utils/constants/app_constant.dart';
+import '../utils/utilities.dart';
 
 class ProductsViewModel extends ChangeNotifier {
   bool _isLoading = false;
@@ -39,6 +41,7 @@ class ProductsViewModel extends ChangeNotifier {
       var cf = await FirebaseFirestore.instance
           .collection(AppConstants.products)
           .add(productModel.toJson());
+
 
       await FirebaseFirestore.instance
           .collection(AppConstants.products)

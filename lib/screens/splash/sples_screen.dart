@@ -1,9 +1,10 @@
+import 'package:firebase/screens/permissions/permissions_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/app_permissions.dart';
 import '../../utils/project_extensions.dart';
 import '../routes.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,8 +23,13 @@ class _SplashScreenState extends State<SplashScreen> {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       Navigator.pushReplacementNamed(context, RouteNames.loginRoute);
+
     } else {
+      // Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //   return PermissionsScreen();
+      // }));
       Navigator.pushReplacementNamed(context, RouteNames.tabRoute);
+
     }
   }
 

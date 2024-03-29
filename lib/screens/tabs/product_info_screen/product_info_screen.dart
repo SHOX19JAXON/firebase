@@ -1,7 +1,10 @@
+import 'package:firebase/data/lokal/local.dart';
+import 'package:firebase/data/models/natification.dart';
 import 'package:firebase/data/models/product_model.dart';
 import 'package:firebase/services/local_notification_service.dart';
 import 'package:firebase/utils/project_extensions.dart';
 import 'package:firebase/utils/styles/app_text_style.dart';
+import 'package:firebase/view_models/natification.dart';
 import 'package:firebase/view_models/products_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -233,12 +236,12 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                                   ),
                                   TextButton(
                                     onPressed: () async {
-                                      LocalNotificationService.localNotificationService
-                                          .showNotification(
-                                          title: widget.productModel1.productName,
-                                          body: "Maxsulot o'chirildi",
-                                          id: son);
-                                      son++;
+                                      context.read<NotificationViewModel>().addMessage(
+                                        natificationModel: NatificationModel(
+                                            name: "Product  O'chirildi",
+                                            id: idContLocal),
+                                      );
+                                      idContLocal++;
                                       context
                                           .read<ProductsViewModel>()
                                           .deleteProduct(

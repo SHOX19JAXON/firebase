@@ -1,4 +1,5 @@
 import 'package:firebase/screens/splash/sples_screen.dart';
+import 'package:firebase/screens/tabs/news_screen/news_screen.dart';
 import 'package:firebase/screens/tabs/notification/notification.dart';
 import 'package:firebase/screens/tabs/tab_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class AppRoutes {
 
       case RouteNames.notification:
         return navigate(  Notification1());
+      case RouteNames.newsScreen:
+        return navigate(  NewsScreen());
 
       default:
         return navigate(
@@ -47,4 +50,5 @@ class RouteNames {
   static const String loginRoute = "/login_route";
   static const String registerRoute = "/register_route";
   static const String notification = "/notification";
+  static const String newsScreen = "/newsScreen";
 }

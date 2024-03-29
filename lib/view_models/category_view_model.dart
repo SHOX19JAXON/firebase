@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/data/models/category_model.dart';
 import 'package:firebase/services/local_notification_service.dart';
 import 'package:firebase/utils/utilities.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../utils/constants/app_constant.dart';
@@ -75,13 +76,15 @@ class CategoriesViewModel extends ChangeNotifier {
     }
   }
 
-  deleteCategory(String docId, BuildContext context) async {
+  deleteCategory(CategoryModel categoryModel, BuildContext context) async {
     try {
       _notify(true);
       await FirebaseFirestore.instance
           .collection(AppConstants.categories)
-          .doc(docId)
+          .doc(categoryModel.docId)
           .delete();
+
+      FirebaseStorage.instance.ref().child(categoryModel.storagePath).delete();
 
       _notify(false);
     } on FirebaseException catch (error) {

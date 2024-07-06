@@ -1,9 +1,8 @@
-import 'package:firebase/screens/permissions/permissions_screen.dart';
+
 import 'package:firebase/services/local_notification_service.dart';
 import 'package:firebase/view_models/category_view_model.dart';
 import 'package:firebase/view_models/image_view_model.dart';
 import 'package:firebase/view_models/login_view_model.dart';
-
 import 'package:firebase/screens/routes.dart';
 import 'package:firebase/view_models/natification.dart';
 import 'package:firebase/view_models/newes_view_model.dart';
@@ -58,12 +57,15 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
-          // home : PermissionsScreen(),
+          // home : PinCod(),
+          // PermissionsScreen(),
           navigatorKey: navigatorKey,
           initialRoute: RouteNames.splashScreen,
           onGenerateRoute: AppRoutes.generateRoute,
         );
-      },
+      }
+      ,
+
     );
   }
 }

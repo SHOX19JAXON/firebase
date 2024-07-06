@@ -58,7 +58,7 @@ dependencies:
   firebase_messaging: ^14.7.20
   firebase_storage: ^11.6.11
   location: ^5.0.3
-
+  flutter_bloc: ^8.1.5
 
 
 

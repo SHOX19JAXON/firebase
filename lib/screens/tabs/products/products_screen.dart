@@ -135,11 +135,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     title: productModel.productName,
                                     body: productModel.productDescription,
                                     id: son);
-
+                            context.read<NotificationViewModel>().getNotifications();
                             context.read<NotificationViewModel>().addMessage(
                                   natificationModel: NatificationModel(
                                       name:
-                                          "categoriy   Yngilandi Malumot qo'shildi",
+                                          "categoriy Yngilandi Malumot qo'shildi",
                                       id: idContLocal),
                                 );
                             idContLocal++;

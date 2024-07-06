@@ -43,7 +43,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   return const AddCategoryScreen();
                 }));
               },
-              icon: Icon(Icons.add,))
+              icon: Icon(
+                Icons.add,
+              ))
         ],
       ),
       body: Padding(
@@ -286,8 +288,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
                                         context
                                             .read<CategoriesViewModel>()
-                                            .deleteCategory(
-                                                category, context);
+                                            .deleteCategory(category, context);
                                       },
                                       icon: const Icon(
                                         Icons.delete,
